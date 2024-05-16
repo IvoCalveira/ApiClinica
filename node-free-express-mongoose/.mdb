@@ -1,0 +1,11 @@
+{
+  "projectName": "node-free-express-mongoose",
+  "meta": {
+    "type": "backend",
+    "starter": "node-free-express-mongoose"
+  },
+  "backend": {
+    "platform": "node17"
+  },
+  "hash": "b0bc46a4"
+}
