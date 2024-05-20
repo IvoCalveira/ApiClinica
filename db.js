@@ -30,7 +30,7 @@ exports.buscarPersonas= function(respuesta){
 
 exports.insertarPersona = function(usuario, retornar){
     conectar();
-
+    //no me funciona: 
     // var sql = "INSERT into usuario(?,?,?,?,?,?,?)";
     // sql= sql + " values ('" + usuario.nombre + "',";
     // sql= sql + "'" + usuario.apellido + "',";
@@ -39,7 +39,6 @@ exports.insertarPersona = function(usuario, retornar){
     // sql= sql + "'" + usuario.usuario + "',";
     // sql= sql + "'" + usuario.password + "',";
     // sql= sql + "'" + usuario.tipo_usuario + "')";
-
     var sql = "INSERT INTO usuario (nombre, apellido, mail, fec_nac, usuario, password, tipo_usuario) VALUES (?, ?, ?, ?, ?, ?, ?)";
     var values = [usuario.nombre, usuario.apellido, usuario.mail, usuario.nacimiento, usuario.usuario,usuario.password, usuario.tipo_usuario];
     
@@ -51,8 +50,6 @@ exports.insertarPersona = function(usuario, retornar){
            retornar(resultado);
    
        } );
-
-
 }
 
 exports.borrarPersona = function(usuario, retornar){
