@@ -1,3 +1,4 @@
+//de acá se va a db.js
 var db = require('./db');
 
 exports.leer = function(usuario,res){

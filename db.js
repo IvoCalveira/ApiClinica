@@ -3,9 +3,9 @@ var mysql = require('mysql');
 
 var conexion = mysql.createConnection({
     host: 'mysql.db.mdbgo.com',
-    user: '	ivo_calveira_calveiraivo',
+    user: 'ivo_calveira_calveiraivo',
     password: 'Admin2024!**',
-    database: '	ivo_calveira_clinica',
+    database: 'ivo_calveira_clinica',
     port: 3306
 });
 
