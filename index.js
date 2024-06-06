@@ -3,13 +3,12 @@ var cors = require('cors')
 var aplicacion = require('./aplicacion')
 
 
-
-
 var app = express();
-app.use(express.json());
+// app.use(express.json());
+
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors()); 
-
-
 
 app.get('/prueba/', (req, res) => {
 
@@ -39,6 +38,8 @@ app.post('/insertar', (req, res) => {
     aplicacion.insertar(usuario, res);
 
 })
+
+
 
 app.post('/leer/', (req,res)  => {
 

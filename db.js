@@ -30,26 +30,35 @@ exports.buscarPersonas= function(respuesta){
 
 exports.insertarPersona = function(usuario, retornar){
     conectar();
-    //no me funciona: 
-    // var sql = "INSERT into usuario(?,?,?,?,?,?,?)";
-    // sql= sql + " values ('" + usuario.nombre + "',";
-    // sql= sql + "'" + usuario.apellido + "',";
-    // sql= sql + "'" + usuario.mail + "',";
-    // sql= sql + "'" + usuario.nacimiento + "',";
-    // sql= sql + "'" + usuario.usuario + "',";
-    // sql= sql + "'" + usuario.password + "',";
-    // sql= sql + "'" + usuario.tipo_usuario + "')";
-    var sql = "INSERT INTO usuario (nombre, apellido, mail, fec_nac, user, password, tipo_usuario) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    var values = [usuario.nombre, usuario.apellido, usuario.mail, usuario.nacimiento, usuario.user,usuario.password, usuario.tipo_usuario];
+
+    var sql = "INSERT INTO usuario (nombre, apellido, mail, fec_nac, user, password, tipo_usuario, foto_perfil) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    var values = [usuario.nombre, usuario.apellido, usuario.mail, usuario.nacimiento, usuario.user,usuario.password, usuario.tipo_usuario, usuario.foto_perfil];
     
     conexion.query(sql, values,
-        function(err, resultado, filas){
+        function(err, resultado){
            if(err) throw err;
            console.log(resultado);
            
-           retornar(resultado);
-   
-       } );
+           const idmedico = resultado.insertId;
+           if(usuario.tipo_usuario == 2){
+               var sql2 = "INSERT INTO medico (id_usuario, especialidad, foto_especialidad, autorizado) VALUES (?, ?, ?, ?)";
+               var medico = [idmedico, usuario.especialidad, usuario.foto_especialidad, usuario.autorizado];
+               conexion.query(sql2, medico,
+                function(err, resultadomedico, filas){
+                    if(err) throw err;
+                    console.log(resultadomedico);
+                    
+                    return retornar(resultadomedico);
+                });
+                const idhabiles = resultadomedico.insertId;
+                insertardias(usuario, idhabiles);
+            }
+        });
+}
+
+insertardias = function(usuario, retornar){
+    var sql = "INSERT INTO dias_habiles (id_medico, lunes, martes, miercoles, jueves, viernes, horario_desde, horas_hasta) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    var values = [idhabiles, usuario.horario_desde, usuario.horario_hasta];
 }
 
 exports.borrarPersona = function(usuario, retornar){
