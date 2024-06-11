@@ -40,7 +40,7 @@ exports.insertarPersona = function(usuario, retornar){
            console.log(resultado);
            
            const idmedico = resultado.insertId;
-           if(usuario.tipo_usuario == 2){
+           if(usuario.tipo_usuario == 2 || usuario.tipo_usuario == 3){
             //acá inserta en la tabla médicos
                var sql2 = "INSERT INTO medico (id_usuario, especialidad, foto_especialidad, autorizado) VALUES (?, ?, ?, ?)";
                var medico = [idmedico, usuario.especialidad, usuario.foto_especialidad, usuario.autorizado];
@@ -49,7 +49,12 @@ exports.insertarPersona = function(usuario, retornar){
                     if(err) throw err;
                     console.log(resultadomedico);
             //acá inserta en la tabla dias_habiles  
-                const idhabiles = resultadomedico.insertId;
+            
+            
+            const idhabiles = resultadomedico.insertId;
+               if (usuario.tipo_usuario == 2){
+
+               
                 var sql3 = "INSERT INTO dias_habiles (id_medico, lunes, martes, miercoles, jueves, viernes, horas_desde, horas_hasta) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                 var dias = [idhabiles, usuario.dias_habiles[0], usuario.dias_habiles[1], usuario.dias_habiles[2], usuario.dias_habiles[3], usuario.dias_habiles[4], usuario.horario_desde, usuario.horario_hasta];
                 conexion.query(sql3, dias,
@@ -58,7 +63,11 @@ exports.insertarPersona = function(usuario, retornar){
                         console.log(resultadodias);
                         
                         return retornar(resultadodias);
-                    });
+                        });
+                    }
+                    else {
+                        return retornar(resultadomedico);
+                    }
                 });
             }
         });
