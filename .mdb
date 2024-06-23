@@ -6,5 +6,6 @@
   "backend": {
     "platform": "node17"
   },
-  "hash": "2850bdc8"
+  "hash": "2850bdc8",
+  "domain": "ivo_calveira-api_clinica.mdbgo.io"
 }
