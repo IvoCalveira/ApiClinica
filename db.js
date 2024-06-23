@@ -28,6 +28,15 @@ exports.buscarPersonas= function(respuesta){
     });
 }
 
+exports.buscarMedico= function(respuesta){
+    conectar();
+    conexion.query("SELECT * FROM usuario WHERE tipo_usuario = 2", function(err, resultado, filas){
+        if(err) throw err;
+        console.log(resultado);
+        respuesta(resultado);
+    });
+}
+
 exports.insertarPersona = function(usuario, retornar){
     conectar();
 

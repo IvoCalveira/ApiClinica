@@ -45,7 +45,8 @@ app.post('/leer/', (req,res)  => {
 
 
     var usuario = req.body;
-    res.json(usuario.nombre);
+    //res.json(usuario.nombre);
+    aplicacion.leerMedico(usuario, res);
 
 });
 
