@@ -3,9 +3,9 @@ var mysql = require('mysql');
 
 var conexion = mysql.createConnection({
     host: 'mysql.db.mdbgo.com',
-    user: 'ivo_calveira_calveiraivo',
+    user: 'ivo_calveira2_funciona',
     password: 'Admin2024!**',
-    database: 'ivo_calveira_clinica',
+    database: '	ivo_calveira2_base',
     port: 3306
 });
 
@@ -34,11 +34,14 @@ exports.insertarPersona = function(usuario, retornar){
     var sql = "INSERT INTO usuario (nombre, apellido, mail, fec_nac, user, password, tipo_usuario, foto_perfil) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     var values = [usuario.nombre, usuario.apellido, usuario.mail, usuario.nacimiento, usuario.user,usuario.password, usuario.tipo_usuario, usuario.foto_perfil];
     
+    
     conexion.query(sql, values,
         function(err, resultado){
            if(err) throw err;
            console.log(resultado);
-           
+           if(usuario.tipo_usuario == 1){
+            return retornar(resultado);
+           }
            const idmedico = resultado.insertId;
            if(usuario.tipo_usuario == 2 || usuario.tipo_usuario == 3){
             //acá inserta en la tabla médicos
