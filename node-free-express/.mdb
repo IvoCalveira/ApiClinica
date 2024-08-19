@@ -1,0 +1,12 @@
+{
+  "projectName": "node-free-express",
+  "meta": {
+    "type": "backend",
+    "starter": "node-free-express"
+  },
+  "backend": {
+    "platform": "node17"
+  },
+  "hash": "e79ec8c7",
+  "domain": "ivo_calveira-clinica.mdbgo.io"
+}

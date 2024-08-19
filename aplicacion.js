@@ -9,6 +9,14 @@ exports.leer = function(usuario,res){
 
 }
 
+exports.leerMedico = function(usuario,res){
+
+    db.buscarMedico(datos => {
+        res.json(datos,usuario)
+    } );
+
+}
+
 function validarusuario(datos, usuario) {
     for (i = 0; i < datos.length; i++) {
         element = datos[i];

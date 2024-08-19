@@ -1,0 +1,12 @@
+{
+  "projectName": "clinica",
+  "meta": {
+    "type": "backend",
+    "starter": "node-free-express-sequelize"
+  },
+  "backend": {
+    "platform": "node17"
+  },
+  "hash": "b4ac593b",
+  "domain": "ivo_calveira-clinica.mdbgo.io"
+}
