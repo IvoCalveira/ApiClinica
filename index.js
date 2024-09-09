@@ -57,6 +57,11 @@ app.delete('/borrar/', (req,res) => {
 
 })
 
+app.post('/nuevo_turno', (req, res) => {
+
+    aplicacion.buscarDisponibilidad(req,res);
+
+});
 
 app.listen(process.env.PORT || 3000, ()=> {
 
