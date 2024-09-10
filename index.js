@@ -57,7 +57,7 @@ app.delete('/borrar/', (req,res) => {
 
 })
 
-app.post('/nuevo_turno', (req, res) => {
+app.post('/nuevo', (req, res) => {
 
     aplicacion.buscarDisponibilidad(req,res);
 

@@ -3,9 +3,9 @@ var mysql = require('mysql');
 
 var conexion = mysql.createConnection({
     host: 'mysql.db.mdbgo.com',
-    user: 'ivo_calveira_funciona',
+    user: 'ivo_calveira_calveiraivo',
     password: 'Admin2024!**',
-    database: '	ivo_calveira2_base',
+    database: 'ivo_calveira_clinica',
     port: 3306
 });
 
@@ -16,7 +16,6 @@ function conectar(){
         else
         console.log('conexion exitosa');
     })
-
 }
 
 exports.buscarPersonas= function(respuesta){
@@ -25,6 +24,7 @@ exports.buscarPersonas= function(respuesta){
         if(err) throw err;
         console.log(resultado);
         respuesta(resultado);
+        
     });
 }
 
@@ -34,6 +34,7 @@ exports.buscarMedico= function(respuesta){
         if(err) throw err;
         console.log(resultado);
         respuesta(resultado);
+        
     });
 }
 
@@ -83,93 +84,94 @@ exports.insertarPersona = function(usuario, retornar){
                 });
             }
         });
+        
 }
 
-exports.buscarMedicosDisponibilidad = function() {
-    conectar();
+ exports.buscarMedicosDisponibilidad = function() {
+     conectar();
 
-    return new Promise((resolve, reject) => {
-        const query = `
-             SELECT DISTINCT 
-                m.id_medico, 
-                u.nombre, 
-                u.apellido, 
-                u.foto_perfil,  
-                m.especialidad, 
-                d.lunes, 
-                d.martes, 
-                d.miercoles, 
-                d.jueves, 
-                d.viernes, 
-                d.horas_desde, 
-                d.horas_hasta 
-            FROM 
-                usuario AS u, 
-                medico AS m, 
-                dias_habiles AS d 
-            WHERE 
-                u.tipo_usuario = 2 
-                AND m.autorizado = 1 
-                AND m.id_medico = d.id_medico 
-                AND u.id_usuario = m.id_usuario 
-            ORDER BY 
-                m.id_medico
-        `;
+     return new Promise((resolve, reject) => {
+         const query = `
+              SELECT DISTINCT 
+                 m.id_medico, 
+                 u.nombre, 
+                 u.apellido, 
+                 u.foto_perfil,  
+                 m.especialidad, 
+                 d.lunes, 
+                 d.martes, 
+                 d.miercoles, 
+                 d.jueves, 
+                 d.viernes, 
+                 d.horas_desde, 
+                 d.horas_hasta 
+             FROM 
+                 usuario AS u, 
+                 medico AS m, 
+                 dias_habiles AS d 
+             WHERE 
+                 u.tipo_usuario = 2 
+                 AND m.autorizado = 1 
+                 AND m.id_medico = d.id_medico 
+                 AND u.id_usuario = m.id_usuario 
+             ORDER BY 
+                 m.id_medico
+         `;
         
-        conexion.query(query, (error, results) => {
-            if (error) {
-                return reject(error);
-            }
+         conexion.query(query, (error, results) => {
+             if (error) {
+                 return reject(error);
+             }
             
-            // Procesar los resultados para incluir los días en un array
-            const processedResults = results.map(result => ({
-                id_medico: result.id_medico,
-                nombre: result.nombre,
-                apellido: result.apellido,
-                foto_perfil: result.foto_perfil,
-                especialidad: result.especialidad,
-                dias_habiles: [
-                    result.lunes,
-                    result.martes,
-                    result.miercoles,
-                    result.jueves,
-                    result.viernes
-                ],
-                horas_desde: result.horas_desde,
-                horas_hasta: result.horas_hasta
+             // Procesar los resultados para incluir los días en un array
+             const processedResults = results.map(result => ({
+                 id_medico: result.id_medico,
+                 nombre: result.nombre,
+                 apellido: result.apellido,
+                 foto_perfil: result.foto_perfil,
+                 especialidad: result.especialidad,
+                 dias_habiles: [
+                     result.lunes,
+                     result.martes,
+                     result.miercoles,
+                     result.jueves,
+                     result.viernes
+                 ],
+               horas_desde: result.horas_desde,
+                 horas_hasta: result.horas_hasta
             }));
 
             resolve(processedResults);
         });
-    });
+     });
 };
 
-// exports.nuevoTurno = function(usuario, respuesta){
-//     conectar();
+exports.nuevoTurno = function(usuario, respuesta){
+  conectar();
     
-//     const sql = "INSERT into turnos (id_usuario, id_medico, hora ,fecha ,aceptado) VALUES (?,?,?,?,?);";
-//     const values = [usuario.id_usuario, resultado.idmedico, usuario.hora, usuario.fecha, usuario.aceptado];
+    const sql = "INSERT into turnos (id_usuario, id_medico, hora ,fecha ,aceptado) VALUES (?,?,?,?,?);";
+    const values = [usuario.id_usuario, resultado.idmedico, usuario.hora, usuario.fecha, usuario.aceptado];
 
-//     conexion.query(sql, values, function (err, resultado) {
-//         if(err) throw err;
-//         console.log(resultado);
-//         respuesta(resultado);
-//     });
-// };
+    conexion.query(sql, values, function (err, resultado) {
+       if(err) throw err;
+      console.log(resultado);
+       respuesta(resultado);
+    });
+ };
 
-exports.turnosTomados = function(){
+ exports.turnosTomados = function(){
     conectar();
 
     return new Promise((resolve, reject) => {
         conexion.query("SELECT * FROM turnos", (error,results) =>{
             if(error){
-                return reject;
+               return reject;
             }
-             resolve(results);   
-        });
-    });
+            resolve(results);   
+       });
+   });
    
-}
+ }
 
 exports.borrarPersona = function(usuario, retornar){
     conectar();
@@ -185,6 +187,6 @@ exports.borrarPersona = function(usuario, retornar){
    
        } );
 
-
+       conexion.end();
 }
 
